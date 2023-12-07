@@ -15,26 +15,26 @@ import (
 	"fmt"
 )
 
-// NFType NF types known to NRF
-type NFType struct {
-	NFTypeAnyOf *NFTypeAnyOf
+// DataSetId Types of data sets stored in UDR
+type DataSetId struct {
+	DataSetIdAnyOf *DataSetIdAnyOf
 	string *string
 }
 
 // Unmarshal JSON data into any of the pointers in the struct
-func (dst *NFType) UnmarshalJSON(data []byte) error {
+func (dst *DataSetId) UnmarshalJSON(data []byte) error {
 	var err error
-	// try to unmarshal JSON data into NFTypeAnyOf
-	err = json.Unmarshal(data, &dst.NFTypeAnyOf);
+	// try to unmarshal JSON data into DataSetIdAnyOf
+	err = json.Unmarshal(data, &dst.DataSetIdAnyOf);
 	if err == nil {
-		jsonNFTypeAnyOf, _ := json.Marshal(dst.NFTypeAnyOf)
-		if string(jsonNFTypeAnyOf) == "{}" { // empty struct
-			dst.NFTypeAnyOf = nil
+		jsonDataSetIdAnyOf, _ := json.Marshal(dst.DataSetIdAnyOf)
+		if string(jsonDataSetIdAnyOf) == "{}" { // empty struct
+			dst.DataSetIdAnyOf = nil
 		} else {
-			return nil // data stored in dst.NFTypeAnyOf, return on the first match
+			return nil // data stored in dst.DataSetIdAnyOf, return on the first match
 		}
 	} else {
-		dst.NFTypeAnyOf = nil
+		dst.DataSetIdAnyOf = nil
 	}
 
 	// try to unmarshal JSON data into string
@@ -50,13 +50,13 @@ func (dst *NFType) UnmarshalJSON(data []byte) error {
 		dst.string = nil
 	}
 
-	return fmt.Errorf("Data failed to match schemas in anyOf(NFType)")
+	return fmt.Errorf("Data failed to match schemas in anyOf(DataSetId)")
 }
 
 // Marshal data from the first non-nil pointers in the struct to JSON
-func (src *NFType) MarshalJSON() ([]byte, error) {
-	if src.NFTypeAnyOf != nil {
-		return json.Marshal(&src.NFTypeAnyOf)
+func (src *DataSetId) MarshalJSON() ([]byte, error) {
+	if src.DataSetIdAnyOf != nil {
+		return json.Marshal(&src.DataSetIdAnyOf)
 	}
 
 	if src.string != nil {
@@ -66,38 +66,38 @@ func (src *NFType) MarshalJSON() ([]byte, error) {
 	return nil, nil // no data in anyOf schemas
 }
 
-type NullableNFType struct {
-	value *NFType
+type NullableDataSetId struct {
+	value *DataSetId
 	isSet bool
 }
 
-func (v NullableNFType) Get() *NFType {
+func (v NullableDataSetId) Get() *DataSetId {
 	return v.value
 }
 
-func (v *NullableNFType) Set(val *NFType) {
+func (v *NullableDataSetId) Set(val *DataSetId) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableNFType) IsSet() bool {
+func (v NullableDataSetId) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableNFType) Unset() {
+func (v *NullableDataSetId) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableNFType(val *NFType) *NullableNFType {
-	return &NullableNFType{value: val, isSet: true}
+func NewNullableDataSetId(val *DataSetId) *NullableDataSetId {
+	return &NullableDataSetId{value: val, isSet: true}
 }
 
-func (v NullableNFType) MarshalJSON() ([]byte, error) {
+func (v NullableDataSetId) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableNFType) UnmarshalJSON(src []byte) error {
+func (v *NullableDataSetId) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

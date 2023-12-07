@@ -15,26 +15,26 @@ import (
 	"fmt"
 )
 
-// NFType NF types known to NRF
-type NFType struct {
-	NFTypeAnyOf *NFTypeAnyOf
+// AfEvent Represents Application Events.
+type AfEvent struct {
+	AfEventAnyOf *AfEventAnyOf
 	string *string
 }
 
 // Unmarshal JSON data into any of the pointers in the struct
-func (dst *NFType) UnmarshalJSON(data []byte) error {
+func (dst *AfEvent) UnmarshalJSON(data []byte) error {
 	var err error
-	// try to unmarshal JSON data into NFTypeAnyOf
-	err = json.Unmarshal(data, &dst.NFTypeAnyOf);
+	// try to unmarshal JSON data into AfEventAnyOf
+	err = json.Unmarshal(data, &dst.AfEventAnyOf);
 	if err == nil {
-		jsonNFTypeAnyOf, _ := json.Marshal(dst.NFTypeAnyOf)
-		if string(jsonNFTypeAnyOf) == "{}" { // empty struct
-			dst.NFTypeAnyOf = nil
+		jsonAfEventAnyOf, _ := json.Marshal(dst.AfEventAnyOf)
+		if string(jsonAfEventAnyOf) == "{}" { // empty struct
+			dst.AfEventAnyOf = nil
 		} else {
-			return nil // data stored in dst.NFTypeAnyOf, return on the first match
+			return nil // data stored in dst.AfEventAnyOf, return on the first match
 		}
 	} else {
-		dst.NFTypeAnyOf = nil
+		dst.AfEventAnyOf = nil
 	}
 
 	// try to unmarshal JSON data into string
@@ -50,13 +50,13 @@ func (dst *NFType) UnmarshalJSON(data []byte) error {
 		dst.string = nil
 	}
 
-	return fmt.Errorf("Data failed to match schemas in anyOf(NFType)")
+	return fmt.Errorf("Data failed to match schemas in anyOf(AfEvent)")
 }
 
 // Marshal data from the first non-nil pointers in the struct to JSON
-func (src *NFType) MarshalJSON() ([]byte, error) {
-	if src.NFTypeAnyOf != nil {
-		return json.Marshal(&src.NFTypeAnyOf)
+func (src *AfEvent) MarshalJSON() ([]byte, error) {
+	if src.AfEventAnyOf != nil {
+		return json.Marshal(&src.AfEventAnyOf)
 	}
 
 	if src.string != nil {
@@ -66,38 +66,38 @@ func (src *NFType) MarshalJSON() ([]byte, error) {
 	return nil, nil // no data in anyOf schemas
 }
 
-type NullableNFType struct {
-	value *NFType
+type NullableAfEvent struct {
+	value *AfEvent
 	isSet bool
 }
 
-func (v NullableNFType) Get() *NFType {
+func (v NullableAfEvent) Get() *AfEvent {
 	return v.value
 }
 
-func (v *NullableNFType) Set(val *NFType) {
+func (v *NullableAfEvent) Set(val *AfEvent) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableNFType) IsSet() bool {
+func (v NullableAfEvent) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableNFType) Unset() {
+func (v *NullableAfEvent) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableNFType(val *NFType) *NullableNFType {
-	return &NullableNFType{value: val, isSet: true}
+func NewNullableAfEvent(val *AfEvent) *NullableAfEvent {
+	return &NullableAfEvent{value: val, isSet: true}
 }
 
-func (v NullableNFType) MarshalJSON() ([]byte, error) {
+func (v NullableAfEvent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableNFType) UnmarshalJSON(src []byte) error {
+func (v *NullableAfEvent) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
