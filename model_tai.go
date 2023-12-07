@@ -14,85 +14,84 @@ import (
 	"encoding/json"
 )
 
-// PlmnIdNid Contains the serving core network operator PLMN ID and, for an SNPN, the NID that together with the PLMN ID identifies the SNPN.
-type PlmnIdNid struct {
-	// Mobile Country Code part of the PLMN, comprising 3 digits, as defined in clause 9.3.3.5 of 3GPP TS 38.413.
-	Mcc string `json:"mcc"`
-	// Mobile Network Code part of the PLMN, comprising 2 or 3 digits, as defined in clause 9.3.3.5 of 3GPP TS 38.413.
-	Mnc string `json:"mnc"`
+// Tai Contains the tracking area identity as described in 3GPP 23.003
+type Tai struct {
+	PlmnId PlmnId `json:"plmnId"`
+	// 2 or 3-octet string identifying a tracking area code as specified in clause 9.3.3.10 of 3GPP TS 38.413, in hexadecimal representation. Each character in the string shall take a value of \"0\" to \"9\", \"a\" to \"f\" or \"A\" to \"F\" and shall represent 4 bits. The most significant character representing the 4 most significant bits of the TAC shall appear first in the string, and the character representing the 4 least significant bit of the TAC shall appear last in the string.
+	Tac string `json:"tac"`
 	// This represents the Network Identifier, which together with a PLMN ID is used to identify an SNPN (see 3GPP TS 23.003 and 3GPP TS 23.501 clause 5.30.2.1).
 	Nid *string `json:"nid,omitempty"`
 }
 
-// NewPlmnIdNid instantiates a new PlmnIdNid object
+// NewTai instantiates a new Tai object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPlmnIdNid(mcc string, mnc string) *PlmnIdNid {
-	this := PlmnIdNid{}
-	this.Mcc = mcc
-	this.Mnc = mnc
+func NewTai(plmnId PlmnId, tac string) *Tai {
+	this := Tai{}
+	this.PlmnId = plmnId
+	this.Tac = tac
 	return &this
 }
 
-// NewPlmnIdNidWithDefaults instantiates a new PlmnIdNid object
+// NewTaiWithDefaults instantiates a new Tai object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewPlmnIdNidWithDefaults() *PlmnIdNid {
-	this := PlmnIdNid{}
+func NewTaiWithDefaults() *Tai {
+	this := Tai{}
 	return &this
 }
 
-// GetMcc returns the Mcc field value
-func (o *PlmnIdNid) GetMcc() string {
+// GetPlmnId returns the PlmnId field value
+func (o *Tai) GetPlmnId() PlmnId {
+	if o == nil {
+		var ret PlmnId
+		return ret
+	}
+
+	return o.PlmnId
+}
+
+// GetPlmnIdOk returns a tuple with the PlmnId field value
+// and a boolean to check if the value has been set.
+func (o *Tai) GetPlmnIdOk() (*PlmnId, bool) {
+	if o == nil  {
+		return nil, false
+	}
+	return &o.PlmnId, true
+}
+
+// SetPlmnId sets field value
+func (o *Tai) SetPlmnId(v PlmnId) {
+	o.PlmnId = v
+}
+
+// GetTac returns the Tac field value
+func (o *Tai) GetTac() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.Mcc
+	return o.Tac
 }
 
-// GetMccOk returns a tuple with the Mcc field value
+// GetTacOk returns a tuple with the Tac field value
 // and a boolean to check if the value has been set.
-func (o *PlmnIdNid) GetMccOk() (*string, bool) {
+func (o *Tai) GetTacOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
-	return &o.Mcc, true
+	return &o.Tac, true
 }
 
-// SetMcc sets field value
-func (o *PlmnIdNid) SetMcc(v string) {
-	o.Mcc = v
-}
-
-// GetMnc returns the Mnc field value
-func (o *PlmnIdNid) GetMnc() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Mnc
-}
-
-// GetMncOk returns a tuple with the Mnc field value
-// and a boolean to check if the value has been set.
-func (o *PlmnIdNid) GetMncOk() (*string, bool) {
-	if o == nil  {
-		return nil, false
-	}
-	return &o.Mnc, true
-}
-
-// SetMnc sets field value
-func (o *PlmnIdNid) SetMnc(v string) {
-	o.Mnc = v
+// SetTac sets field value
+func (o *Tai) SetTac(v string) {
+	o.Tac = v
 }
 
 // GetNid returns the Nid field value if set, zero value otherwise.
-func (o *PlmnIdNid) GetNid() string {
+func (o *Tai) GetNid() string {
 	if o == nil || o.Nid == nil {
 		var ret string
 		return ret
@@ -102,7 +101,7 @@ func (o *PlmnIdNid) GetNid() string {
 
 // GetNidOk returns a tuple with the Nid field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PlmnIdNid) GetNidOk() (*string, bool) {
+func (o *Tai) GetNidOk() (*string, bool) {
 	if o == nil || o.Nid == nil {
 		return nil, false
 	}
@@ -110,7 +109,7 @@ func (o *PlmnIdNid) GetNidOk() (*string, bool) {
 }
 
 // HasNid returns a boolean if a field has been set.
-func (o *PlmnIdNid) HasNid() bool {
+func (o *Tai) HasNid() bool {
 	if o != nil && o.Nid != nil {
 		return true
 	}
@@ -119,17 +118,17 @@ func (o *PlmnIdNid) HasNid() bool {
 }
 
 // SetNid gets a reference to the given string and assigns it to the Nid field.
-func (o *PlmnIdNid) SetNid(v string) {
+func (o *Tai) SetNid(v string) {
 	o.Nid = &v
 }
 
-func (o PlmnIdNid) MarshalJSON() ([]byte, error) {
+func (o Tai) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
-		toSerialize["mcc"] = o.Mcc
+		toSerialize["plmnId"] = o.PlmnId
 	}
 	if true {
-		toSerialize["mnc"] = o.Mnc
+		toSerialize["tac"] = o.Tac
 	}
 	if o.Nid != nil {
 		toSerialize["nid"] = o.Nid
@@ -137,38 +136,38 @@ func (o PlmnIdNid) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-type NullablePlmnIdNid struct {
-	value *PlmnIdNid
+type NullableTai struct {
+	value *Tai
 	isSet bool
 }
 
-func (v NullablePlmnIdNid) Get() *PlmnIdNid {
+func (v NullableTai) Get() *Tai {
 	return v.value
 }
 
-func (v *NullablePlmnIdNid) Set(val *PlmnIdNid) {
+func (v *NullableTai) Set(val *Tai) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullablePlmnIdNid) IsSet() bool {
+func (v NullableTai) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullablePlmnIdNid) Unset() {
+func (v *NullableTai) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullablePlmnIdNid(val *PlmnIdNid) *NullablePlmnIdNid {
-	return &NullablePlmnIdNid{value: val, isSet: true}
+func NewNullableTai(val *Tai) *NullableTai {
+	return &NullableTai{value: val, isSet: true}
 }
 
-func (v NullablePlmnIdNid) MarshalJSON() ([]byte, error) {
+func (v NullableTai) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullablePlmnIdNid) UnmarshalJSON(src []byte) error {
+func (v *NullableTai) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
